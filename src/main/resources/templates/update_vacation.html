@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Vacation Management System</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Manage Vacations</h1>
+            <hr />
+            <h2>Update Vacation Request</h2>
+            <form action="#" th:action="@{/vacations/saveUpdate}" th:object="${vacation}" method="POST">
+                <div class="mb-4 col-4">
+                    <input type="hidden" th:field="*{id}" />
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="employee">Employee</label>
+                    <select th:field="*{employee}" class="form-control">
+                        <option th:each="emp : ${listEmployees}"
+                                th:value="${emp.id}"
+                                th:text="${emp.firstName + ' ' + emp.lastName}"></option>
+                    </select>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="beginDate">Begin Date</label>
+                    <input type="date" name="beginDate" th:value="${beginDateStr}" class="form-control" />
+                    <span class="text-danger" th:errors="*{beginDate}"></span>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="endDate">End Date</label>
+                    <input type="date" name="endDate" th:value="${endDateStr}" class="form-control" />
+                    <span class="text-danger" th:errors="*{endDate}"></span>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="status">Status</label>
+                    <select th:field="*{status}" class="form-control">
+                        <option th:value="WAITING">WAITING</option>
+                        <option th:value="ACCEPTED">ACCEPTED</option>
+                        <option th:value="REJECTED">REJECTED</option>
+                    </select>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="explanation">Explanation</label>
+                    <input type="text" th:field="*{explanation}" class="form-control" />
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary col-2">Save</button>
+                    <a th:href="@{/vacations}" class="btn btn-danger col-2">Cancel</a>
+                </div>
+            </form>
+            <hr />
+        </div>
+    </body>
+</html>

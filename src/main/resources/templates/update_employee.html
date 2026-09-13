@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Vacation Management System</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Manage Employees</h1>
+            <hr />
+            <h2>Update Employee</h2>
+            <form action="#" th:action="@{/employees/saveUpdate}" th:object="${employee}" method="POST">
+                <div class="mb-4 col-4">
+                    <input type="hidden" th:field="*{id}" />
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="firstName">First Name</label>
+                    <input type="text" th:field="*{firstName}" class="form-control" />
+                    <span class="text-danger" th:errors="*{firstName}"></span>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="lastName">Last Name</label>
+                    <input type="text" th:field="*{lastName}" class="form-control" />
+                    <span class="text-danger" th:errors="*{lastName}"></span>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="birthDate">Birthdate</label>
+                    <input type="date" name="birthDate" th:value="${birthDateStr}" class="form-control" />
+                    <span class="text-danger" th:errors="*{birthDate}"></span>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="email">Email</label>
+                    <input type="text" th:field="*{email}" class="form-control" />
+                    <span class="text-danger" th:errors="*{email}"></span>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="nbDaysOff">Number of Days Off</label>
+                    <input type="number" th:field="*{nbDaysOff}" class="form-control" />
+                    <span class="text-danger" th:errors="*{nbDaysOff}"></span>
+                </div>
+                <div class="mb-4 col-4">
+                    <label th:for="department">Department</label>
+                    <select th:field="*{department}" class="form-control">
+                        <option th:each="depart : ${listDepartments}"
+                                th:value="${depart.id}"
+                                th:text="${depart.name}"></option>
+                    </select>
+                    <span class="text-danger" th:errors="*{department}"></span>
+                </div>
+                <div th:if="${message}" th:text="${message}" class="alert-danger mb-3"/>
+                <div>
+                    <button type="submit" class="btn btn-primary col-2">Save</button>
+                    <a th:href="@{/employees}" class="btn btn-danger col-2">Cancel</a>
+                </div>
+            </form>
+            <hr />
+        </div>
+    </body>
+</html>

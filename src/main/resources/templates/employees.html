@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Vacation Management System</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+    </head>
+    <body>
+        <div class="container my-2">
+            <h1>Manage Employees</h1>
+            <hr />
+            <a th:href="@{/employees/new}" class="btn btn-primary btn-sm mb-3">Add Employee</a>
+            <h2 class="mb-3">Employee List</h2>
+            <div class="row">
+                <div class="col">
+                    <form th:action="@{/employees/filter1}" method="get">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <input type="text" name="motCle" th:value="${filter1}"/>
+                            <button type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col">
+                    <form th:action="@{/employees/filter2}" method="get">
+                        <div class="form-group">
+                            <label>Birthdate:</label>
+                            <input type="date" name="dateNaiss" th:value="${filter2}"/>
+                            <button type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col">
+                    <form th:action="@{/employees/filter3}" method="get">
+                        <div class="form-group">
+                            <label>Department:</label>
+                            <select name="depart">
+                                <option th:value="0">Select department</option>
+                                <option th:each="depart : ${listDepartments}"
+                                        th:value="${depart.id}"
+                                        th:text="${depart.name}"
+                                        th:selected="${depart.id}==${filter3}"></option>
+                            </select>
+                            <button type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <a th:href="@{/employees}" class="btn btn-light btn-outline-dark">Erase filters</a>
+                </div>
+            </div>
+        </div>
+        <div class="container my-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employee First Name</th>
+                        <th>Employee Last Name</th>
+                        <th>Employee Birth Date</th>
+                        <th>Employee Email</th>
+                        <th>Employee Department</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="employee : ${listEmployees}">
+                        <td th:text="${employee.firstName}"></td>
+                        <td th:text="${employee.lastName}"></td>
+                        <td th:text="${#temporals.format(employee.birthDate,'dd/MM/yyyy')}"></td>
+                        <td th:text="${employee.email}"></td>
+                        <td th:text="${employee.department.name}"></td>
+                        <td>
+                            <a th:href="@{/employees/update(id=${employee.id})}" class="btn btn-primary">Update</a>
+                            <a th:href="@{/employees/delete(id=${employee.id})}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div th:if="${message}" th:text="${message}" class="alert-danger mb-3"/>
+            <a th:href="@{/}">Back to Welcome Page</a>
+        </div>
+    </body>
+</html>

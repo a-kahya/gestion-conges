@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Vacation Management System</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+    </head>
+    <body>
+        <div class="container my-2">
+            <h1>Manage Vacations</h1>
+            <hr />
+            <a th:href="@{/vacations/new}" class="btn btn-primary btn-sm mb-3">Add Vacation Request</a>
+            <h2 class="mb-3">Vacation Request List</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Begin Date</th>
+                        <th>End Date</th>
+                        <th>Nb Days</th>
+                        <th>Status</th>
+                        <th>Explanation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="vacation : ${listVacations}">
+                        <td th:text="${vacation.employee.firstName + ' ' + vacation.employee.lastName}"></td>
+                        <td th:text="${#temporals.format(vacation.beginDate,'dd/MM/yyyy')}"></td>
+                        <td th:text="${#temporals.format(vacation.endDate,'dd/MM/yyyy')}"></td>
+                        <td th:text="${vacation.nbDays}"></td>
+                        <td th:text="${vacation.status}"></td>
+                        <td th:text="${vacation.explanation}"></td>
+                        <td>
+                            <a th:href="@{/vacations/update(id=${vacation.id})}" class="btn btn-primary">Update</a>
+                            <a th:href="@{/vacations/delete(id=${vacation.id})}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a th:href="@{/}">Back to Welcome Page</a>
+        </div>
+    </body>
+</html>
